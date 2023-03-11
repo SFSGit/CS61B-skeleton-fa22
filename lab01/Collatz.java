@@ -1,12 +1,19 @@
 /** Class that prints the Collatz sequence starting from a given number.
- *  @author YOUR NAME HERE
+ *  @author Albert Sun
  */
 public class Collatz {
 
     /** Returns the nextNumber in a Collatz sequence. */
     public static int nextNumber(int n) {
         // TODO: Fill in this method.
-        return 1;
+        int nextnum;
+        if (n % 2 == 0){
+            nextnum = n / 2;
+        }
+        else{
+            nextnum = 3 * n + 1;
+        }
+        return nextnum;
     }
 
     public static void main(String[] args) {
