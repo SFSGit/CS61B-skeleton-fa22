@@ -116,9 +116,51 @@ public class Model extends Observable {
      *    and the trailing tile does not.
      */
     public void tilt(Side side) {
-        // TODO: Fill in this function.
-
+        _board.setViewingPerspective(side);
+        for (int col = 0; col < size(); col++){
+            helper(size()-1, 0, _board, col);
+        }
+        _board.setViewingPerspective(Side.NORTH);
         checkGameOver();
+    }
+    public void helper(int first, int last, Board b, int col) {
+//        if (first == last || first<0 || last>b.size()){
+        if (first <= last){
+            return;
+        }
+        Tile first_tile = b.tile(col, first);
+        Tile second_tile = b.tile(col,first-1);
+        if (first_tile == null){
+            for (int movelast = first - 1; movelast >= last; movelast--){
+                Tile temp = b.tile(col, movelast);
+                if (temp != null){
+                    b.move(col, movelast+1, temp);
+                }
+            }
+            helper(first, last+1, b, col);
+
+        } else if ( (first_tile != null) && (second_tile!=null) && (first_tile.value() != second_tile.value())) {
+            helper(first-1, last, b, col);
+        } else if((first_tile != null) && (second_tile==null)){
+            for (int movelast = first - 2; movelast >= last; movelast--) {
+                Tile temp = b.tile(col, movelast);
+                if (temp != null) {
+                    b.move(col, movelast + 1, temp);
+                }
+            }
+            helper(first,last+1, b ,col);
+        }
+        else {
+            b.move(col, first, second_tile);
+            _score += b.tile(col,first).value();
+            for (int movelast = first - 2; movelast >= last; movelast--) {
+                Tile temp = b.tile(col, movelast);
+                if (temp != null) {
+                    b.move(col, movelast + 1, temp);
+                }
+            }
+            helper(first - 1, last + 1, b, col);
+        }
     }
 
     /** Checks if the game is over and sets the gameOver variable
@@ -137,7 +179,13 @@ public class Model extends Observable {
      *  Empty spaces are stored as null.
      */
     public static boolean emptySpaceExists(Board b) {
-        // TODO: Fill in this function.
+        for (int col = 0; col < b.size(); col++) {
+            for (int row = 0; row < b.size(); row++) {
+                if (b.tile(col, row) == null) {
+                    return true;
+                }
+            }
+        }
         return false;
     }
 
@@ -147,7 +195,14 @@ public class Model extends Observable {
      * given a Tile object t, we get its value with t.value().
      */
     public static boolean maxTileExists(Board b) {
-        // TODO: Fill in this function.
+        for (int col = 0; col < b.size(); col++) {
+            for (int row = 0; row < b.size(); row++) {
+                Tile t = b.tile(col, row);
+                if ((t != null) && (t.value() == MAX_PIECE )){
+                    return true;
+                }
+            }
+        }
         return false;
     }
 
@@ -158,7 +213,30 @@ public class Model extends Observable {
      * 2. There are two adjacent tiles with the same value.
      */
     public static boolean atLeastOneMoveExists(Board b) {
-        // TODO: Fill in this function.
+        if (emptySpaceExists(b)){
+            return true;
+        }
+        else {
+            for (int col = 0; col < b.size(); col++) {
+                for (int row = 0; row < b.size() - 1; row++) {
+                    Tile first_t = b.tile(col, row);
+                    Tile last_t = b.tile(col, row+1);
+                    if (first_t.value() == last_t.value()) {
+                        return true;
+                    }
+                }
+            }
+            for (int row = 0; row < b.size(); row++) {
+                for (int col = 0; col < b.size() - 1; col++) {
+                    Tile first_t = b.tile(col, row);
+                    Tile last_t = b.tile(col+1, row);
+                    if (first_t.value() == last_t.value()) {
+                        return true;
+                    }
+                }
+            }
+        }
+
         return false;
     }
 

@@ -77,7 +77,7 @@ public class Board implements Iterable<Tile> {
      *
      * Returns whether or not this move is a merge.
      * */
-    public boolean move(int col, int row, Tile tile) {
+    public boolean move(int col, int row, Tile tile) { // 这个tile是真实的top的tile ;col 是当前view的col
         int pcol = _viewPerspective.col(col, row, size()),
                 prow = _viewPerspective.row(col, row, size());
         if (tile.col() == pcol && tile.row() == prow) {
