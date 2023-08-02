@@ -24,7 +24,7 @@ public class TimeAList {
     public static void timeAListConstruction() {
         AList<Integer> Ns = new AList<>();
         int double_num  = 1000;
-        for (int i = 0; i < 9; i++){
+        for (int i = 0; i < 10; i++){
             Ns.addLast((double_num));
             double_num *= 2;
         }
