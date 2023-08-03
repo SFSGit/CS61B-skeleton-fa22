@@ -39,7 +39,7 @@ public class BuggyAList<Item> {
             resize(size * 2);
         }
         items[size] = x;
-        size = size + 1;
+        size = size + 1 ;
     }
 
     /** Returns the item from the back of the list. */
@@ -60,7 +60,7 @@ public class BuggyAList<Item> {
       * returns deleted item. */
     public Item removeLast() {
         if ((size < items.length / 4) && (size > 4)) {
-            resize(size / 4);
+            resize(items.length / 4);
         }
         Item x = getLast();
         items[size - 1] = null;

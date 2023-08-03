@@ -23,13 +23,15 @@ public class TimeAList {
 
     public static void timeAListConstruction() {
         AList<Integer> Ns = new AList<>();
+        AList<Double> times = new AList<>();
+        AList<Integer> opCounts = new AList<>();
+
         int double_num  = 1000;
         for (int i = 0; i < 10; i++){
             Ns.addLast((double_num));
             double_num *= 2;
         }
-        AList<Double> times = new AList<>();
-        AList<Integer> opCounts = new AList<>();
+
         for (int num = 0; num < Ns.size(); num++) {
             opCounts.addLast(Ns.get(num));
             AList<Integer> test = new AList<>();
