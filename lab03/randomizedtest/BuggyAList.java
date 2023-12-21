@@ -39,7 +39,7 @@ public class BuggyAList<Item> {
             resize(size * 2);
         }
         items[size] = x;
-        size = size + 1 ;
+        size = size + 1;
     }
 
     /** Returns the item from the back of the list. */
